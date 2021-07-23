@@ -1,5 +1,5 @@
 * {
-  box-sizing: border-box; /* soma o padding e o border ao width e ao height */
+  box-sizing: border-box; /* soma o padding e o border ao width e ao height (mas não inclui a margin) */
 }
 
 body {
