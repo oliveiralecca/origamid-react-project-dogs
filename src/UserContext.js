@@ -1,5 +1,6 @@
 import React from 'react'
 import { TOKEN_POST, TOKEN_VALIDATE_POST, USER_GET } from './api'
+import { useNavigate } from 'react-router-dom'
 
 export const UserContext = React.createContext()
 
@@ -8,6 +9,43 @@ export const UserStorage = ({ children }) => {
   const [login, setLogin] = React.useState(null)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(null)
+  const navigate = useNavigate()
+
+  const userLogout = React.useCallback(async function userLogout() {
+    setData(null)
+    setError(null)
+    setLoading(false)
+    setLogin(false)
+    window.localStorage.removeItem('token')
+    navigate('/login')
+  }, [navigate])
+
+  async function getUser(token) {
+    const { url, options } = USER_GET(token)
+    const response = await fetch(url, options)
+    const json = await response.json()
+    setData(json)
+    setLogin(true)
+  }
+
+  async function userLogin(username, password) {
+    try {
+      setError(null)
+      setLoading(true)
+      const { url, options } = TOKEN_POST({ username, password })
+      const tokenResponse = await fetch(url, options)
+      if (!tokenResponse.ok) throw new Error(`Error: ${tokenResponse.statusText}`)
+      const { token } = await tokenResponse.json()
+      window.localStorage.setItem('token', token)
+      await getUser(token)
+      navigate('/conta')
+    } catch(err) {
+      setError(err.message)
+      setLogin(false)
+    } finally {
+      setLoading(false)
+    }    
+  } // se o token do usuário já estiver no localStorage, puxa de lá ao invés de fazer o fetch para pegar o token novamente
 
   React.useEffect(() => {
     async function autoLogin() {
@@ -28,34 +66,10 @@ export const UserStorage = ({ children }) => {
       }
     }
     autoLogin()
-  }, [])
-
-  async function getUser(token) {
-    const { url, options } = USER_GET(token)
-    const response = await fetch(url, options)
-    const json = await response.json()
-    setData(json)
-    setLogin(true)
-  }
-
-  async function userLogin(username, password) {
-    const { url, options } = TOKEN_POST({ username, password })
-    const tokenResponse = await fetch(url, options)
-    const { token } = await tokenResponse.json()
-    window.localStorage.setItem('token', token)
-    getUser(token)
-  } // se o token do usuário já estiver no localStorage, puxa de lá ao invés de fazer o fetch para pegar o token novamente
-
-  async function userLogout() {
-    setData(null)
-    setError(null)
-    setLoading(false)
-    setLogin(false)
-    window.localStorage.removeItem('token')
-  }
+  }, [userLogout])
 
   return (
-    <UserContext.Provider value={{ userLogin, userLogout, data }}>
+    <UserContext.Provider value={{ userLogin, userLogout, data, error, loading, login }}>
       {children}
     </UserContext.Provider>
   )
