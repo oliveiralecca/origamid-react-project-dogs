@@ -1,0 +1,29 @@
+.wrapper {
+  display: grid;
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  grid-area: 1/1; /* vai ocupar a primeira coluna e a primeira linha do grid */
+  opacity: 0;
+  transition: .2s;
+}
+
+.skeleton {
+  grid-area: 1/1; /* ficando um item por cima do outro (img e skeleton) */
+  height: 100%;
+  background-image: linear-gradient(90deg, #eee 0px, #fff 50%, #eee 100%); /* 90deg = horizontal */
+  background-color: #eee;
+  background-size: 200%; /* macete = tem que ser maior do que oq ele é (os 100% que termina no gradiente) */
+  animation: skeleton 1.5s infinite linear;
+}
+
+@keyframes skeleton {
+  from {
+    background-position: 0px;
+  }
+  to {
+    background-position: -200%;
+  }
+}
