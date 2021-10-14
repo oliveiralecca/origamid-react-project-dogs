@@ -12,6 +12,11 @@
   animation: scaleUp .3s forwards;
 }
 
+.single.photo {
+  grid-template-columns: 1fr;
+  height: auto;
+} /* nomes juntos pois são classes do mesmo elemento */
+
 @keyframes scaleUp {
   to {
     opacity: initial; /* ou 1, dá no mesmo */
@@ -23,13 +28,19 @@
   padding: 2rem 2rem 0 2rem;
 }
 
+.single .details {
+  padding: 1rem 0 0 0;
+}
+
 .img {
   grid-row: 1/4; /* ocupa todas as 3 linhas = da 1a até a 4a parte das linhas | || || | */
 }
 
-.comments {
-  padding: 0 2rem;
-}
+.single .img {
+  grid-row: 1;
+  border-radius: .4rem;
+  overflow: hidden;
+} /* nomes separados pois são classes de elementos diferentes */
 
 @media (max-width: 64rem) {
   .photo {
@@ -65,11 +76,11 @@
 }
 
 .attributes {
-display: flex;
-font-size: 1.125rem;
-font-weight: bold;
-margin-top: 1rem;
-margin-bottom: 2rem;
+  display: flex;
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .attributes li {
