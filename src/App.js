@@ -14,18 +14,20 @@ import { UserStorage } from './UserContext';
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
         <UserStorage>
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="login/*" element={<Login />} />
-            <ProtectedRoute path="conta/*" element={<User />} /> {/* path e element são as props que serão transferidas para o elemento ProtectedRoute */}
-            <Route path="foto/:id" element={<Photo />} />
-            <Route path="perfil/:user" element={<UserProfile />} />
-            <Route path="*" element={<Page404 />} /> {/* path="*" = qualquer rota que não seja uma das anteriores */}
-          </Routes>
+          <main className="AppBody">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="login/*" element={<Login />} />
+              <ProtectedRoute path="conta/*" element={<User />} /> {/* path e element são as props que serão transferidas para o elemento ProtectedRoute */}
+              <Route path="foto/:id" element={<Photo />} />
+              <Route path="perfil/:user" element={<UserProfile />} />
+              <Route path="*" element={<Page404 />} /> {/* path="*" = qualquer rota que não seja uma das anteriores */}
+            </Routes>
+          </main>
           <Footer />
         </UserStorage>
       </BrowserRouter>
