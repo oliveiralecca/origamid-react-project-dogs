@@ -2,6 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { UserContext } from '../../UserContext'
 import Feed from '../Feed/Feed'
+import Head from '../Helper/Head'
 import Page404 from '../Page404'
 import UserHeader from './UserHeader'
 import UserPhotoPost from './UserPhotoPost'
@@ -11,6 +12,7 @@ const User = () => {
   const { data } = React.useContext(UserContext)
   return (
     <section className="container">
+      <Head title="Minha conta" />
       <UserHeader />
       <Routes>
         <Route path="/" element={<Feed user={data.id} />} />
