@@ -1,6 +1,6 @@
 export const API_URL = 'https://dogsapi.origamid.dev/json'
 
-// uma função para cada endpoint
+// uma função para cada endpoint (continuação da url)
 export function TOKEN_POST(body) {
   return {
     url: API_URL + '/jwt-auth/v1/token',
@@ -106,6 +106,32 @@ export function PHOTO_DELETE(id) {
       headers: {
         Authorization: 'Bearer ' + window.localStorage.getItem('token')
       },
+    }
+  }
+}
+
+export function PASSWORD_LOST(body) {
+  return {
+    url: `${API_URL}/api/password/lost`,
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }
+  }
+}
+
+export function PASSWORD_RESET(body) {
+  return {
+    url: `${API_URL}/api/password/reset`,
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
     }
   }
 }
