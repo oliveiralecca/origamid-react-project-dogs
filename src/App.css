@@ -94,3 +94,7 @@ a {
 .AppBody {
   flex: 1; /* vai se expandir, deixando o footer sempre lá embaixo */
 }
+
+/* .VictoryContainer {
+  height: initial !important;
+} */
