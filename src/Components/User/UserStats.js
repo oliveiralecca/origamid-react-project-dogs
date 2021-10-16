@@ -4,7 +4,7 @@ import useFetch from '../../Hooks/useFetch'
 import { STATS_GET } from '../../Api'
 import Loading from '../Helper/Loading'
 import Error from '../Helper/Error'
-import UserStatsGraphs from './UserStatsGraphs'
+const UserStatsGraphs = React.lazy(() => import('./UserStatsGraphs')) // parar carregar a lib de gráficos só na página de estatíticas, e não em todo o site, o que pesaria desnecessariamente
 
 const UserStats = () => {
   const { data, loading, error, request } = useFetch()
@@ -21,10 +21,10 @@ const UserStats = () => {
   if (error) return <Error error={error} />
   if (data)
   return (
-    <div>
+    <React.Suspense fallback={<div></div>}>
       <Head title="Estatísticas" />
       <UserStatsGraphs data={data} />
-    </div>
+    </React.Suspense>
   )
   else return null
 }
